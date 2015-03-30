@@ -8,16 +8,21 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class Enemy extends Sprite{
+public class EnemyPink extends Enemy{
 	public static final int Y_TO_FADE = 400;
 	public static final int Y_TO_DIE = 600;
 	
 	private int step = 12;
 	private boolean alive = true;
-	public Image donut;
 	
-	public Enemy(int x, int y) {
-		super(x, y, 30, 30);
+	public EnemyPink(int x, int y) {
+		super(x, y);
+		try {
+			super.donut = ImageIO.read(new File("/home/sakinah/OOP/spw/f2/spw/image/donutPink.png"));  
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -29,20 +34,9 @@ public class Enemy extends Sprite{
 			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 
 					(float)(Y_TO_DIE - y)/(Y_TO_DIE - Y_TO_FADE)));
 		}
-		
-		//g.setColor(Color.RED);
+		g.drawImage(donut,x,y,width,height,null);
+		//g.setColor(Color.PINK);
 		//g.fillRect(x, y, width, height);
 		
-	}
-
-	public void proceed(){
-		y += step;
-		if(y > Y_TO_DIE){
-			alive = false;
-		}
-	}
-	
-	public boolean isAlive(){
-		return alive;
 	}
 }

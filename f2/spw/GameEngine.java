@@ -43,15 +43,32 @@ public class GameEngine implements KeyListener, GameReporter{
 		timer.start();
 	}
 	
-	private void generateEnemy(){
-		Enemy e = new Enemy((int)(Math.random()*390), 30);
+	private void generateEnemyPink(){
+		EnemyPink e = new EnemyPink((int)(Math.random()*390), 30);
+		gp.sprites.add(e);
+		enemies.add(e);
+	}
+	private void generateEnemyYellow(){
+		EnemyYellow e = new EnemyYellow((int)(Math.random()*390), 30);
+		gp.sprites.add(e);
+		enemies.add(e);
+	}
+	private void generateEnemyBlue(){
+		EnemyBlue e = new EnemyBlue((int)(Math.random()*390), 30);
 		gp.sprites.add(e);
 		enemies.add(e);
 	}
 	
 	private void process(){
 		if(Math.random() < difficulty){
-			generateEnemy();
+			if(Math.random() < 0.3){
+				generateEnemyPink();
+			}
+			else if (Math.random() > 0.7) {
+				generateEnemyBlue();
+			} 
+			else	
+				generateEnemyYellow();
 		}
 		
 		Iterator<Enemy> e_iter = enemies.iterator();
