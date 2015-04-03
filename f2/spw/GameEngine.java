@@ -111,8 +111,15 @@ public class GameEngine implements KeyListener, GameReporter{
 		case KeyEvent.VK_D:
 			difficulty += 0.1;
 			break;
+		case KeyEvent.VK_UP:
+			v.moveHeight(-1);
+			break;
+		case KeyEvent.VK_DOWN:
+			v.moveHeight(1);
+			break;
 		}
 	}
+
 
 	public long getScore(){
 		return score;
