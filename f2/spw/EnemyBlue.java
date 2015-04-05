@@ -18,7 +18,7 @@ public class EnemyBlue extends Enemy{
 	public EnemyBlue(int x, int y) {
 		super(x, y);
 		try {
-			super.donut = ImageIO.read(new File("/home/sakinah/OOP/spw/f2/spw/image/donutBlue.png"));  //hellokitty
+			super.donut = ImageIO.read(new File("./f2/spw/image/donutBlue.png"));  //hellokitty
 		}
 		catch(IOException e){
 			e.printStackTrace();

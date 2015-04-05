@@ -15,7 +15,7 @@ public class SpaceShip extends Sprite{
 	public SpaceShip(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		try {
-			spaceshipPic = ImageIO.read(new File("/home/sakinah/OOP/spw/f2/spw/image/hellokitty.gif"));  //hellokitty
+			spaceshipPic = ImageIO.read(new File("./f2/spw/image/hellokitty.png"));  //hellokitty
 		}
 		catch(IOException e){
 			e.printStackTrace();

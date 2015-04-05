@@ -18,7 +18,7 @@ public class EnemyPink extends Enemy{
 	public EnemyPink(int x, int y) {
 		super(x, y);
 		try {
-			super.donut = ImageIO.read(new File("/home/sakinah/OOP/spw/f2/spw/image/donutPink.png"));  
+			super.donut = ImageIO.read(new File("./f2/spw/image/donutPink.png"));  
 		}
 		catch(IOException e){
 			e.printStackTrace();
