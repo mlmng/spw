@@ -8,17 +8,21 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class Enemy extends Sprite{
+public class EnemyBowpink extends Enemy{
 	public static final int Y_TO_FADE = 400;
 	public static final int Y_TO_DIE = 600;
 	
 	private int step = 12;
 	private boolean alive = true;
-	public Image enemy;  //ใช้ในลูก
-	public int score;
 	
-	public Enemy(int x, int y) {
-		super(x, y, 30, 30);
+	public EnemyBowpink(int x, int y) {
+		super(x, y);
+		try {
+			super.enemy = ImageIO.read(new File("./f2/spw/image/bowpink.png"));  
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -30,23 +34,14 @@ public class Enemy extends Sprite{
 			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 
 					(float)(Y_TO_DIE - y)/(Y_TO_DIE - Y_TO_FADE)));
 		}
-		
-		//g.setColor(Color.RED);
+		g.drawImage(enemy,x,y,width,height,null);
+		//g.setColor(Color.PINK);
 		//g.fillRect(x, y, width, height);
 		
 	}
-
-	public void proceed(){
-		y += step;
-		if(y > Y_TO_DIE){
-			alive = false;
-		}
-	}
-	
-	public boolean isAlive(){
-		return alive;
-	}
+	@Override
 	public int getScore(){
+		score = 100;
 		return score;
 	}
 }

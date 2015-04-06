@@ -15,6 +15,7 @@ public class GameEngine implements KeyListener, GameReporter{
 	GamePanel gp;
 		
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();	
+	private ArrayList<Enemy> bombs = new ArrayList<Enemy>();
 	private SpaceShip v;	
 	
 	private Timer timer;
@@ -43,32 +44,40 @@ public class GameEngine implements KeyListener, GameReporter{
 		timer.start();
 	}
 	
-	private void generateEnemyPink(){
-		EnemyPink e = new EnemyPink((int)(Math.random()*390), 30);
+	private void generateEnemyFlower(){
+		EnemyFlower e = new EnemyFlower((int)(Math.random()*390), 30);
 		gp.sprites.add(e);
 		enemies.add(e);
 	}
-	private void generateEnemyYellow(){
-		EnemyYellow e = new EnemyYellow((int)(Math.random()*390), 30);
+	private void generateEnemyBowblack(){
+		EnemyBowblack e = new EnemyBowblack((int)(Math.random()*390), 30);
 		gp.sprites.add(e);
 		enemies.add(e);
 	}
-	private void generateEnemyBlue(){
-		EnemyBlue e = new EnemyBlue((int)(Math.random()*390), 30);
+	private void generateEnemyBowpink(){
+		EnemyBowpink e = new EnemyBowpink((int)(Math.random()*390), 30);
 		gp.sprites.add(e);
 		enemies.add(e);
+	}
+	private void generateEnemyBomb(){
+		EnemyBomb b = new EnemyBomb((int)(Math.random()*390), 30);
+		gp.sprites.add(b);
+		bombs.add(b);
 	}
 	
 	private void process(){
 		if(Math.random() < difficulty){
 			if(Math.random() < 0.3){
-				generateEnemyPink();
+				generateEnemyFlower();
 			}
-			else if (Math.random() > 0.7) {
-				generateEnemyBlue();
-			} 
+			else if (Math.random() > 0.6) {
+				generateEnemyBowpink();
+			}
+			else if (Math.random() > 0.9) {
+				generateEnemyBomb();
+			}  
 			else	
-				generateEnemyYellow();
+				generateEnemyBowblack();
 		}
 		
 		Iterator<Enemy> e_iter = enemies.iterator();
@@ -79,18 +88,28 @@ public class GameEngine implements KeyListener, GameReporter{
 			if(!e.isAlive()){
 				e_iter.remove();
 				gp.sprites.remove(e);
-				score += 10; //score modify
+				// score += e.getScore(); //score modify
+			}
+		}
+		Iterator<Enemy> b_iter = bombs.iterator();
+		while(b_iter.hasNext()){
+			Enemy b = b_iter.next();
+			b.proceed();
+			
+			if(!b.isAlive()){
+				b_iter.remove();
+				gp.sprites.remove(b);
 			}
 		}
 		
 		gp.updateGameUI(this);
 		
-		Rectangle2D.Double vr = v.getRectangle();
+		Rectangle2D.Double vr = v.getRectangle();  //ชนแล้วได้คะแนน
 		Rectangle2D.Double er;
 		for(Enemy e : enemies){
 			er = e.getRectangle();
 			if(er.intersects(vr)){
-				die();
+				score += e.getScore();
 				return;
 			}
 		}

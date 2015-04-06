@@ -8,17 +8,17 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class EnemyPink extends Enemy{
+public class EnemyFlower extends Enemy{
 	public static final int Y_TO_FADE = 400;
 	public static final int Y_TO_DIE = 600;
 	
 	private int step = 12;
 	private boolean alive = true;
 	
-	public EnemyPink(int x, int y) {
+	public EnemyFlower(int x, int y) {
 		super(x, y);
 		try {
-			super.donut = ImageIO.read(new File("./f2/spw/image/donutPink.png"));  
+			super.enemy = ImageIO.read(new File("./f2/spw/image/flower.png"));  //hellokitty
 		}
 		catch(IOException e){
 			e.printStackTrace();
@@ -34,9 +34,14 @@ public class EnemyPink extends Enemy{
 			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 
 					(float)(Y_TO_DIE - y)/(Y_TO_DIE - Y_TO_FADE)));
 		}
-		g.drawImage(donut,x,y,width,height,null);
-		//g.setColor(Color.PINK);
-		//g.fillRect(x, y, width, height);
+		g.drawImage(enemy,x,y,width,height,null);
+		// g.setColor(Color.YELLOW);
+		// g.fillRect(x, y, width, height);
 		
+	}
+	@Override
+	public int getScore(){
+		score = 50;
+		return score;
 	}
 }
