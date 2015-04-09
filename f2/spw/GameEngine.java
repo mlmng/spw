@@ -15,7 +15,8 @@ public class GameEngine implements KeyListener, GameReporter{
 	GamePanel gp;
 		
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();	
-	private ArrayList<Enemy> bombs = new ArrayList<Enemy>();
+	private ArrayList<EnemyBomb> bombs = new ArrayList<EnemyBomb>();
+	private ArrayList<EnemyBin> bins = new ArrayList<EnemyBin>();
 	private SpaceShip v;	
 	
 	private Timer timer;
@@ -64,20 +65,26 @@ public class GameEngine implements KeyListener, GameReporter{
 		gp.sprites.add(b);
 		bombs.add(b);
 	}
+	private void generateEnemyBin(){
+		EnemyBin c = new EnemyBin((int)(Math.random()*390), 30);
+		gp.sprites.add(c);
+		bins.add(c);
+	}
 	
 	private void process(){
 		if(Math.random() < difficulty){
 			if(Math.random() < 0.3){
-				generateEnemyFlower();
+				generateEnemyBin();
+				generateEnemyBomb();
 			}
 			else if (Math.random() > 0.6) {
 				generateEnemyBowpink();
 			}
 			else if (Math.random() > 0.9) {
-				generateEnemyBomb();
+				generateEnemyBowblack();
 			}  
 			else	
-				generateEnemyBowblack();
+				generateEnemyFlower();
 		}
 		
 		Iterator<Enemy> e_iter = enemies.iterator();
@@ -91,7 +98,7 @@ public class GameEngine implements KeyListener, GameReporter{
 				// score += e.getScore(); //score modify
 			}
 		}
-		Iterator<Enemy> b_iter = bombs.iterator();
+		Iterator<EnemyBomb> b_iter = bombs.iterator();
 		while(b_iter.hasNext()){
 			Enemy b = b_iter.next();
 			b.proceed();
@@ -99,6 +106,16 @@ public class GameEngine implements KeyListener, GameReporter{
 			if(!b.isAlive()){
 				b_iter.remove();
 				gp.sprites.remove(b);
+			}
+		}
+		Iterator<EnemyBin> c_iter = bins.iterator();
+		while(c_iter.hasNext()){
+			Enemy c = c_iter.next();
+			c.proceed();
+			
+			if(!c.isAlive()){
+				c_iter.remove();
+				gp.sprites.remove(c);
 			}
 		}
 		
@@ -112,6 +129,29 @@ public class GameEngine implements KeyListener, GameReporter{
 				score += e.getScore();
 				return;
 			}
+		}
+		Rectangle2D.Double r = v.getRectangle();  //โดนระเบิดแล้วตาย
+		Rectangle2D.Double br;
+		for(EnemyBomb b : bombs){
+			br = b.getRectangle();
+			if(br.intersects(r)){
+				die();
+				return;
+			}
+		}
+		Rectangle2D.Double sr = v.getRectangle();  //โดนถังขยะEnemyจะถูกเคลียร์
+		Rectangle2D.Double cr;
+		for(EnemyBin c : bins){
+			cr = c.getRectangle();
+			if(cr.intersects(sr)){
+				clearEnemy();
+				return;
+			}
+		}
+	}
+	private void clearEnemy(){
+		for(Enemy s : enemies){
+			s.die();
 		}
 	}
 	
