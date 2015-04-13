@@ -16,6 +16,7 @@ public class GamePanel extends JPanel {
 	
 	private BufferedImage bi;
 	public Image background;  //bg	
+	public Image energy; 
 	Graphics2D big;
 	ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 
@@ -25,6 +26,7 @@ public class GamePanel extends JPanel {
 		//big.setBackground(Color.PINK);
 		try {
 			background = ImageIO.read(new File("./f2/spw/image/bg.jpg"));  
+			energy = ImageIO.read(new File("./f2/spw/image/energy.png")); 
 		}
 		catch(IOException e){
 			e.printStackTrace();
@@ -36,6 +38,10 @@ public class GamePanel extends JPanel {
 		big.drawImage(background,0,0,null);
 		big.setColor(Color.WHITE);		
 		big.drawString(String.format("%08d", reporter.getScore()), 300, 20);
+		big.drawString(String.format("Energy : "), 10, 20);
+		for(int i=0; i<reporter.getEnergy(); i++){
+			big.drawImage(energy,65,7,20,20,null);
+		 }
 		for(Sprite s : sprites){
 			s.draw(big);
 		}

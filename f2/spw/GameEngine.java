@@ -22,6 +22,7 @@ public class GameEngine implements KeyListener, GameReporter{
 	private Timer timer;
 	
 	private long score = 0;
+	private int energy = 5;
 	private double difficulty = 0.1;
 	
 	public GameEngine(GamePanel gp, SpaceShip v) {
@@ -127,6 +128,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			er = e.getRectangle();
 			if(er.intersects(vr)){
 				score += e.getScore();
+				e.die();
 				return;
 			}
 		}
@@ -135,8 +137,14 @@ public class GameEngine implements KeyListener, GameReporter{
 		for(EnemyBomb b : bombs){
 			br = b.getRectangle();
 			if(br.intersects(r)){
-				die();
-				return;
+				if(energy == 0){
+					die();
+					return;
+				}
+				else{
+					energy--;
+					b.die();
+				}
 			}
 		}
 		Rectangle2D.Double sr = v.getRectangle();  //โดนถังขยะEnemyจะถูกเคลียร์
@@ -145,6 +153,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			cr = c.getRectangle();
 			if(cr.intersects(sr)){
 				clearEnemy();
+				c.die();
 				return;
 			}
 		}
@@ -182,6 +191,10 @@ public class GameEngine implements KeyListener, GameReporter{
 
 	public long getScore(){
 		return score;
+	}
+
+	public int getEnergy(){
+		return energy;
 	}
 	
 	@Override
