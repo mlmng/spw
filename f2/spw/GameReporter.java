@@ -4,5 +4,6 @@ public interface GameReporter {
 
 	long getScore();
 	int getEnergy();
+	long getMaxScore();
 
 }

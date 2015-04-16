@@ -37,10 +37,13 @@ public class GamePanel extends JPanel {
 		big.clearRect(0, 0, 400, 600);
 		big.drawImage(background,0,0,null);
 		big.setColor(Color.WHITE);		
-		big.drawString(String.format("%08d", reporter.getScore()), 300, 20);
+		big.drawString(String.format("%08d", reporter.getScore()), 320, 20);
+		big.drawString(String.format("High Score = %d", reporter.getMaxScore()), 150, 20);
 		big.drawString(String.format("Energy : "), 10, 20);
+		int x=65;
 		for(int i=0; i<reporter.getEnergy(); i++){
-			big.drawImage(energy,65,7,20,20,null);
+			big.drawImage(energy,x,7,20,20,null);
+			x+=15;
 		 }
 		for(Sprite s : sprites){
 			s.draw(big);

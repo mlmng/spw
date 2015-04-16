@@ -17,18 +17,22 @@ public class GameEngine implements KeyListener, GameReporter{
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();	
 	private ArrayList<EnemyBomb> bombs = new ArrayList<EnemyBomb>();
 	private ArrayList<EnemyBin> bins = new ArrayList<EnemyBin>();
-	private SpaceShip v;	
+	private SpaceShip v;
+	ReadScore highScore = new ReadScore();
+
 	
 	private Timer timer;
 	
 	private long score = 0;
-	private int energy = 5;
+	private long maxScore = 0;
+	private int energy = 3;
 	private double difficulty = 0.1;
+
 	
-	public GameEngine(GamePanel gp, SpaceShip v) {
+	public GameEngine(GamePanel gp, SpaceShip v ) {
 		this.gp = gp;
-		this.v = v;		
-		
+		this.v = v;
+		this.maxScore = Long.parseLong(highScore.getScore());	
 		gp.sprites.add(v);
 		
 		timer = new Timer(50, new ActionListener() {
@@ -138,6 +142,9 @@ public class GameEngine implements KeyListener, GameReporter{
 			br = b.getRectangle();
 			if(br.intersects(r)){
 				if(energy == 0){
+					if(score>maxScore){
+						highScore.writeScore(score);
+					}
 					die();
 					return;
 				}
@@ -191,6 +198,14 @@ public class GameEngine implements KeyListener, GameReporter{
 
 	public long getScore(){
 		return score;
+	}
+
+	public long getMaxScore(){
+		if(score > maxScore){
+			return score;
+
+		}
+		return maxScore;
 	}
 
 	public int getEnergy(){
