@@ -8,17 +8,17 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class EnemyBowblack extends Enemy{
+public class EnemyMinusScore extends Enemy{
 	public static final int Y_TO_FADE = 400;
 	public static final int Y_TO_DIE = 600;
 	
 	private int step = 12;
 	private boolean alive = true;
 	
-	public EnemyBowblack(int x, int y) {
+	public EnemyMinusScore(int x, int y) {
 		super(x, y);
 		try {
-			super.enemy = ImageIO.read(new File("./f2/spw/image/bowblack.png"));  //hellokitty
+			super.enemy = ImageIO.read(new File("./f2/spw/image/kitty_mac.png"));  //hellokitty
 		}
 		catch(IOException e){
 			e.printStackTrace();
@@ -41,7 +41,7 @@ public class EnemyBowblack extends Enemy{
 	}
 	@Override
 	public int getScore(){
-		score = 10;
+		score = -50;
 		return score;
 	}
 

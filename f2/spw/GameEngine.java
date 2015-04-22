@@ -50,8 +50,8 @@ public class GameEngine implements KeyListener, GameReporter{
 		timer.start();
 	}
 	
-	private void generateEnemyFlower(){
-		EnemyFlower e = new EnemyFlower((int)(Math.random()*390), 30);
+	private void generateEnemyBowPurple(){
+		EnemyBowPurple e = new EnemyBowPurple((int)(Math.random()*390), 30);
 		gp.sprites.add(e);
 		enemies.add(e);
 	}
@@ -62,6 +62,11 @@ public class GameEngine implements KeyListener, GameReporter{
 	}
 	private void generateEnemyBowpink(){
 		EnemyBowpink e = new EnemyBowpink((int)(Math.random()*390), 30);
+		gp.sprites.add(e);
+		enemies.add(e);
+	}
+	private void generateEnemyMinusScore(){
+		EnemyMinusScore e = new EnemyMinusScore((int)(Math.random()*390), 30);
 		gp.sprites.add(e);
 		enemies.add(e);
 	}
@@ -81,6 +86,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			if(Math.random() < 0.3){
 				generateEnemyBin();
 				generateEnemyBomb();
+				generateEnemyMinusScore();
 			}
 			else if (Math.random() > 0.6) {
 				generateEnemyBowpink();
@@ -89,7 +95,7 @@ public class GameEngine implements KeyListener, GameReporter{
 				generateEnemyBowblack();
 			}  
 			else	
-				generateEnemyFlower();
+				generateEnemyBowPurple();
 		}
 		
 		Iterator<Enemy> e_iter = enemies.iterator();

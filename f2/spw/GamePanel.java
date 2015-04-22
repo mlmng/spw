@@ -36,7 +36,7 @@ public class GamePanel extends JPanel {
 	public void updateGameUI(GameReporter reporter){
 		big.clearRect(0, 0, 400, 600);
 		big.drawImage(background,0,0,null);
-		big.setColor(Color.WHITE);		
+		big.setColor(Color.BLACK);		
 		big.drawString(String.format("%08d", reporter.getScore()), 320, 20);
 		big.drawString(String.format("High Score = %d", reporter.getMaxScore()), 150, 20);
 		big.drawString(String.format("Energy : "), 10, 20);
