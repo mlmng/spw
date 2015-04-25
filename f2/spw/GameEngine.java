@@ -17,6 +17,7 @@ public class GameEngine implements KeyListener, GameReporter{
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();	
 	private ArrayList<EnemyBomb> bombs = new ArrayList<EnemyBomb>();
 	private ArrayList<EnemyBin> bins = new ArrayList<EnemyBin>();
+	private ArrayList<Item> items = new ArrayList<Item>();
 	private SpaceShip v;
 	ReadScore highScore = new ReadScore();
 
@@ -27,6 +28,8 @@ public class GameEngine implements KeyListener, GameReporter{
 	private long maxScore = 0;
 	private int energy = 3;
 	private double difficulty = 0.1;
+	private double diffItem = 0.1;
+	private boolean itemRandom = true;
 
 	
 	public GameEngine(GamePanel gp, SpaceShip v ) {
@@ -80,9 +83,15 @@ public class GameEngine implements KeyListener, GameReporter{
 		gp.sprites.add(c);
 		bins.add(c);
 	}
+	private void generateItemRandom(){
+		ItemRandom t = new ItemRandom((int)(Math.random()*390), 30);
+		gp.sprites.add(t);
+		items.add(t);
+	}
 	
 	private void process(){
 		if(Math.random() < difficulty){
+			generateEnemyBowblack();
 			if(Math.random() < 0.3){
 				generateEnemyBin();
 				generateEnemyBomb();
@@ -90,12 +99,16 @@ public class GameEngine implements KeyListener, GameReporter{
 			}
 			else if (Math.random() > 0.6) {
 				generateEnemyBowpink();
-			}
-			else if (Math.random() > 0.9) {
-				generateEnemyBowblack();
-			}  
+			} 
 			else	
 				generateEnemyBowPurple();
+		}
+		if(Math.random() < diffItem){
+			if(itemRandom){
+				generateItemRandom();
+				itemRandom = false;
+			// generateItemRandom();
+			}
 		}
 		
 		Iterator<Enemy> e_iter = enemies.iterator();
@@ -129,6 +142,18 @@ public class GameEngine implements KeyListener, GameReporter{
 				gp.sprites.remove(c);
 			}
 		}
+		Iterator<Item> i_iter = items.iterator();
+		while(i_iter.hasNext()){
+			Item i = i_iter.next();
+			i.proceed();
+			
+			if(!i.isAlive()){
+				i_iter.remove();
+				gp.sprites.remove(i);
+				itemRandom = true;
+				// score += e.getScore(); //score modify
+			}
+		}
 		
 		gp.updateGameUI(this);
 		
@@ -157,6 +182,25 @@ public class GameEngine implements KeyListener, GameReporter{
 				else{
 					energy--;
 					b.die();
+				}
+			}
+		}
+		Rectangle2D.Double i = v.getRectangle();  //รับitem
+		Rectangle2D.Double bt;
+		for(Item t : items){
+			bt = t.getRectangle();
+			if(bt.intersects(i)){
+				if(Math.random()*1 > 0.5){
+					if(energy < 3){
+						energy++;
+						t.die();
+					}
+					else
+						t.die();
+				}
+				else {
+					score += t.getScore();
+					t.die();
 				}
 			}
 		}
