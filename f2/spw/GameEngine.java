@@ -46,7 +46,8 @@ public class GameEngine implements KeyListener, GameReporter{
 			}
 		});
 		timer.setRepeats(true);
-		
+		gp.updateGameUIStart(this);
+	
 	}
 	
 	public void start(){
@@ -242,7 +243,11 @@ public class GameEngine implements KeyListener, GameReporter{
 		case KeyEvent.VK_DOWN:
 			v.moveHeight(1);
 			break;
+		case KeyEvent.VK_SPACE :
+			start();
+			break;
 		}
+
 	}
 
 

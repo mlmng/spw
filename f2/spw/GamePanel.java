@@ -9,7 +9,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-
+import javax.swing.*;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel {
@@ -20,11 +20,14 @@ public class GamePanel extends JPanel {
 	Graphics2D big;
 	ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 
+	JFrame frame = new JFrame("SimpleFrame");
+		JPanel panel = new JPanel();
+
 	public GamePanel() {
 		bi = new BufferedImage(400, 600, BufferedImage.TYPE_INT_ARGB);
 		big = (Graphics2D) bi.getGraphics();
-		//big.setBackground(Color.PINK);
-		try {
+		//big.setBackground(Color.PINK);;;;
+;		try {
 			background = ImageIO.read(new File("./f2/spw/image/bg.jpg"));  
 			energy = ImageIO.read(new File("./f2/spw/image/energy.png")); 
 		}
@@ -45,6 +48,20 @@ public class GamePanel extends JPanel {
 			big.drawImage(energy,x,7,20,20,null);
 			x+=15;
 		 }
+		for(Sprite s : sprites){
+			s.draw(big);
+		}
+		
+		repaint();
+	}
+
+	public void updateGameUIStart(GameReporter reporter){
+		big.clearRect(0, 0, 400, 600);
+		big.drawImage(background,0,0,null);
+		big.setColor(Color.BLACK);		
+		big.drawString(String.format("idsdpoopsfdopfsopfp"), 120, 200);
+
+
 		for(Sprite s : sprites){
 			s.draw(big);
 		}
