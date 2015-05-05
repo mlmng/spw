@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.JPanel;
+import java.awt.Font;
 
 public class GamePanel extends JPanel {
 	
@@ -70,8 +71,10 @@ public class GamePanel extends JPanel {
 	public void updateGameUIStop(GameReporter reporter){
 		big.clearRect(0, 0, 400, 600);
 		big.drawImage(background,0,0,null);
+		Font f = new Font("", Font.BOLD, 30);
+		big.setFont(f);
 		big.setColor(Color.BLACK);		
-		big.drawString(String.format("Game Over!!!"), 120, 200);
+		big.drawString(String.format("Game Over!!!"), 120, 220);
 		for(Sprite s : sprites){
 			s.draw(big);
 		}

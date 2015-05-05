@@ -21,13 +21,18 @@ public class Main {
 				engine.start();
 			}
 		});
+
+		JPanel pn = new JPanel();
+		pn.setLayout(new BorderLayout());
+		pn.add(bt,BorderLayout.SOUTH);
+
 		bt.setFocusable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(400, 650);
+		frame.setSize(475, 650);
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.addKeyListener(engine);
 		frame.getContentPane().add(gp, BorderLayout.CENTER);
-		frame.getContentPane().add(bt, BorderLayout.SOUTH);
+		frame.getContentPane().add(pn, BorderLayout.EAST);
 		frame.setVisible(true);
 		
 		
