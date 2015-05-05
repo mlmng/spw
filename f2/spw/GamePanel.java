@@ -59,9 +59,19 @@ public class GamePanel extends JPanel {
 		big.clearRect(0, 0, 400, 600);
 		big.drawImage(background,0,0,null);
 		big.setColor(Color.BLACK);		
-		big.drawString(String.format("idsdpoopsfdopfsopfp"), 120, 200);
+		big.drawString(String.format("Click Start to Start Game"), 120, 200);
+		for(Sprite s : sprites){
+			s.draw(big);
+		}
+		
+		repaint();
+	}
 
-
+	public void updateGameUIStop(GameReporter reporter){
+		big.clearRect(0, 0, 400, 600);
+		big.drawImage(background,0,0,null);
+		big.setColor(Color.BLACK);		
+		big.drawString(String.format("Game Over!!!"), 120, 200);
 		for(Sprite s : sprites){
 			s.draw(big);
 		}
