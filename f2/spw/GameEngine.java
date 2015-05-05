@@ -223,6 +223,7 @@ public class GameEngine implements KeyListener, GameReporter{
 	}
 	
 	public void die(){
+		gp.updateGameUIStop(this);
 		timer.stop();
 	}
 	
